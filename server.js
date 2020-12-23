@@ -1,3 +1,5 @@
+const mod_jobs = require('./node-sql/mod_jobs');
+
 //server.js
 const express = require('express'),
     bodyParser = require("body-parser"),
@@ -36,6 +38,7 @@ router.post('/post_Job',(req,res) => {
     //To access POST variable use req.body()methods.
     //console.log(jobs_mod);
     //console.log(req.body);
+    mod_jobs.add_Job(req.body);
 });
 
 // REGISTER OUR ROUTES -------------------------------

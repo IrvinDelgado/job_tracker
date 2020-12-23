@@ -25,22 +25,25 @@ const read_Jobs = async()=> {
     return result
 }
 
-const add_Job = (job) => {
+const add_Job = async(job) => {
     //  Connect to DB
-    let db = new sqlite3.Database('C:\\Users\\ID_11\\job_tracker', (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        console.log('Connected to the in-memory SQlite database.');
+    const db = await open({
+        filename: 'C:\\Users\\ID_11\\job_tracker',
+        driver: sqlite3.Database
     });
-
-    //  Close Connection to DB
-    db.close((err) => {
+    let col = '(jobNumber, company, position, location, website, applied, stage, result)'
+    let valParm = '(?,?,?,?,?,?,?,?)'
+    let valArr = []
+    let sql = `INSERT INTO jobs ${col} VALUES${valParm} `;
+    for(key in job){
+        valArr.push(job[key])
+    }
+    db.run(sql, valArr, function(err) {
         if (err) {
-            return console.error(err.message);
+            return console.log(err.message);
         }
-        console.log('Close the database connection.');
     });
+    db.close();
 }
 module.exports = {
     add_Job: add_Job,
