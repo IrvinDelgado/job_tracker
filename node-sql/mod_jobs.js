@@ -1,19 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const { open } = require('sqlite');
 
-class JOB{
-    constructor(jobNumber, company, position, location, website, applied, stage, result){
-            this.jobNumber = jobNumber;
-            this.company=company;
-            this.position=position;
-            this.location=location;
-            this.website=website;
-            this.applied=applied;
-            this.stage=stage;
-            this.result=result;
-    }
-}
-
 const read_Jobs = async()=> {
     // open the database
     const db = await open({
