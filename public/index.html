@@ -1,0 +1,118 @@
+<!-- //index.html -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Job Tracker</title>
+  <meta name="description" content="Website to keep track of your jobs">
+  <meta name="author" content="SitePoint">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="./scss/style.css">
+
+</head>
+
+<body>
+  <!-- TABLE WITH JOBS -->
+
+  <br>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobModal">Add Job
+    Application</button>
+  <br>
+  <table id='job_table' class="table table-dark table-striped table-hover">
+    <caption>
+      List of Jobs Applying to
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col">Company</th>
+        <th scope="col">Position</th>
+        <th scope="col">Job Number</th>
+        <th scope="col">Location</th>
+        <th scope="col">Url</th>
+        <th scope="col">Done Applied</th>
+        <th scope="col">Stage</th>
+        <th scope="col">Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Populated by RestAPI -->
+    </tbody>
+  </table>
+
+  <!--  Modal to add to form  -->
+  <div class="modal fade" id="jobModal" tabindex="-1" aria-labelledby="jobModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="jobModalLabel">Job Application Info</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3" id="job_form">
+            <div class="col-md-8">
+              <label for="company" class="form-label">Company</label>
+              <input type="text" class="form-control" id="company">
+            </div>
+            <div class="col-md-4">
+              <label for="position" class="form-label">Position</label>
+              <input type="text" class="form-control" id="position" value="Software Engineer">
+            </div>
+            <div class="col-12">
+              <label for="website" class="form-label">Url</label>
+              <input type="text" class="form-control" id="website">
+            </div>
+            <div class="col-12">
+              <label for="location" class="form-label">Location</label>
+              <input type="text" class="form-control" id="location">
+            </div>
+            <div class="col-md-4">
+              <label for="jobNum" class="form-label">Job Number</label>
+              <input type="text" class="form-control" id="jobNum">
+            </div>
+            <div class="col-md-4">
+              <label for="stage" class="form-label">Stage</label>
+              <select id="stage" class="form-select">
+                <option selected>Choose...</option>
+                <option value="research">Research</option>
+                <option value="waiting">Waiting</option>
+                <option value="assessment">Assessment</option>
+                <option value="interviews">Interviews</option>
+                <option value="final">Final</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="result" class="form-label">Result</label>
+              <select id="result" class="form-select">
+                <option selected>Choose...</option>
+                <option value="0">Rejected</option>
+                <option value="1">Accepted</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="applied">
+                <label class="form-check-label" for="applied">
+                  Done Applied
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" onclick="submit_Job()" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<script src="/cash/cash.min.js"></script>
+<script src="/bootstrapJS/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="./js/script.js"></script>
+
+</html>
