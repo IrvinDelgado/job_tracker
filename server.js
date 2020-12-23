@@ -1,9 +1,11 @@
 //server.js
 const express = require('express'),
     bodyParser = require("body-parser"),
+    jobs_mod = require("./node-sql/mod_jobs"),
     server = express();
-//const circle = require('./circle.js');
-//  Get the port the env is running on, OR port 3000      
+
+
+    //  Get the port the env is running on, OR port 3000      
 server.set('port', process.env.PORT || 3000);
 
 //  Serve files under the public directory and node modules
@@ -17,8 +19,8 @@ var router = express.Router();
 //  GET METHOD
 
 //  GET JOBS
-router.get('/read_jobs', function (req, res) {
-    var jobs_list = require('./node-sql/read_jobs');
+router.get('/read_jobs', async(req, res) =>{
+    var jobs_list = await jobs_mod.read_Jobs();
     res.json(jobs_list);
 });
 
@@ -32,9 +34,8 @@ server.use(bodyParser.json());
 router.post('/post_Job',(req,res) => {
     //code to perform particular action.
     //To access POST variable use req.body()methods.
-    var jobs_add = require('./node-sql/add_jobs');
-    console.log(jobs_add.sum());
-    console.log(req.body);
+    //console.log(jobs_mod);
+    //console.log(req.body);
 });
 
 // REGISTER OUR ROUTES -------------------------------

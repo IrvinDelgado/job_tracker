@@ -1,8 +1,8 @@
-//
 const sqlite3 = require('sqlite3').verbose();
+const { open } = require('sqlite');
 
 class JOB{
-    constructor(jobNumber, company, position, location, website, applied, stage, result,){
+    constructor(jobNumber, company, position, location, website, applied, stage, result){
             this.jobNumber = jobNumber;
             this.company=company;
             this.position=position;
@@ -14,6 +14,16 @@ class JOB{
     }
 }
 
+const read_Jobs = async()=> {
+    // open the database
+    const db = await open({
+      filename: 'C:\\Users\\ID_11\\job_tracker',
+      driver: sqlite3.Database
+    });
+    const result = await db.all('SELECT * FROM jobs');
+    db.close();
+    return result
+}
 
 const add_Job = (job) => {
     //  Connect to DB
@@ -34,4 +44,5 @@ const add_Job = (job) => {
 }
 module.exports = {
     add_Job: add_Job,
+    read_Jobs: read_Jobs,
 } //etc
