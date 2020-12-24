@@ -34,10 +34,6 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
 router.post('/post_Job',(req,res) => {
-    //code to perform particular action.
-    //To access POST variable use req.body()methods.
-    //console.log(jobs_mod);
-    //console.log(req.body);
     mod_jobs.add_Job(req.body);
 });
 

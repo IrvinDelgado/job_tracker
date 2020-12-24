@@ -1,1 +1,29 @@
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// Card Options SCSS
+#options-title{
+    text-align: center;
+    font-weight: 700;
+    background-color: gray;
+    color: whitesmoke;
+}
+#options-edit{
+    &:hover {
+        background-color:green;
+        color: whitesmoke;
+        fill: whitesmoke;
+    }
+}
+#options-del{
+    &:hover {
+        background-color:red;
+        color: whitesmoke;
+        fill: whitesmoke;
+    }
+}
+.options-icon{
+    float: right;
+    margin-top: 5px;
+    stroke-width: 5px;
+}
+

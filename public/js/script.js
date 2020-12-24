@@ -8,8 +8,14 @@ const jobs_promise = async() =>{
     const jobs = await response.json();
     return jobs;
 }
+
+const bigTest = (jobNumber) =>{
+    console.log(jobNumber)
+} 
+
+
 const insert_NewRow = (job) =>{
-    let newRow = `<tr>\
+    let newRow = `<tr onclick=bigTest('${job.jobNumber}') id='${job.jobNumber}'>\
         <td>${job.company}</td>\
         <td>${job.position}</td>\
         <td>${job.jobNumber}</td>\
