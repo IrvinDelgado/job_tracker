@@ -1,6 +1,9 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 // Card Options SCSS
+#options-card{
+    cursor: pointer;
+}
 #options-title{
     text-align: center;
     font-weight: 700;

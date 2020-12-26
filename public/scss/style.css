@@ -11302,6 +11302,10 @@ fieldset:disabled .btn {
   }
 }
 
+#options-card {
+  cursor: pointer;
+}
+
 #options-title {
   text-align: center;
   font-weight: 700;

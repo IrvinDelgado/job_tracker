@@ -9,13 +9,17 @@ const jobs_promise = async() =>{
     return jobs;
 }
 
-const bigTest = (jobNumber) =>{
-    console.log(jobNumber)
+const show_Table_Menu = (e) =>{
+    console.log(e.originalTarget.textContent);
+    $("#options-card").show();
+    $("#options-card").css( 'position', 'absolute' );
+    $("#options-card").css( 'top', e.pageY );
+    $("#options-card").css( 'left', e.pageX );
 } 
 
 
 const insert_NewRow = (job) =>{
-    let newRow = `<tr onclick=bigTest('${job.jobNumber}') id='${job.jobNumber}'>\
+    let newRow = `<tr id='${job.jobNumber}'>\
         <td>${job.company}</td>\
         <td>${job.position}</td>\
         <td>${job.jobNumber}</td>\
@@ -26,7 +30,9 @@ const insert_NewRow = (job) =>{
         <td>${job.result}</td>\
         </tr>`
     $(".table").find('tbody').append(newRow);
+    document.getElementById(job.jobNumber).addEventListener("click", show_Table_Menu);
 }
+
 const append_Jobs_Table = (jobs_list) =>{
     for(let key in jobs_list){
         job = jobs_list[key];
@@ -76,10 +82,20 @@ const submit_Job = () =>{
 
 $(window).on('load', function () {
     //append jobs to table
+    $("#options-card").hide();
     jobs_promise().then(jobs_list => {
         append_Jobs_Table(jobs_list);
     });
 });
 
 
+$(document).on("mouseup",function(e) 
+{
+    var container = $("#options-card");
 
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.hide();
+    }
+});
