@@ -10,13 +10,40 @@ const jobs_promise = async() =>{
 }
 
 const show_Table_Menu = (e) =>{
-    console.log(e.originalTarget.textContent);
+    row_id = e.originalTarget.parentElement.id;
+    $("#options-edit")[0].attributes[2].nodeValue = `edit_Row('${row_id}')`;
+    $("#options-del")[0].attributes[2].nodeValue = `del_Row('${row_id}')`;
     $("#options-card").show();
     $("#options-card").css( 'position', 'absolute' );
     $("#options-card").css( 'top', e.pageY );
     $("#options-card").css( 'left', e.pageX );
 } 
 
+const edit_Row = (row_id) =>{
+    $('#jobModal').modal('show');
+    //$('#submit-job')[0].attributes[2].nodeValue = update_job()
+    row_element = $("#"+row_id);
+    document.getElementById("company").value = row_element.children()[0].textContent;
+    document.getElementById("position").value = row_element.children()[1].textContent;
+    document.getElementById("jobNum").value = row_element.children()[2].textContent;
+    document.getElementById("location").value = row_element.children()[3].textContent;
+    document.getElementById("website").value = row_element.children()[4].textContent;
+    if(row_element.children()[5].textContent=="1"){document.getElementById("applied").checked=true}
+    else{document.getElementById("applied").checked=false}
+    document.getElementById("stage").value = row_element.children()[6].textContent;
+    document.getElementById("result").value = row_element.children()[7].textContent;
+    
+}
+const del_Row = (row_id) =>{
+    let is_sure = confirm("Are you sure you want to delete a job application?");
+    if(is_sure){
+        console.log(row_id+" was deleted");
+    }else{
+        console.log("Delete was Cancelled")
+    }
+    //row_element = $("#"+row_id);
+    
+}
 
 const insert_NewRow = (job) =>{
     let newRow = `<tr id='${job.jobNumber}'>\
@@ -78,6 +105,10 @@ const submit_Job = () =>{
 
     document.getElementById("job_form").reset();
     $('#jobModal').modal('hide');
+}
+
+const reset_modal = () =>{
+    document.getElementById("job_form").reset();
 }
 
 $(window).on('load', function () {
