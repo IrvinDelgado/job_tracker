@@ -18,10 +18,12 @@ const show_Table_Menu = (e) =>{
     $("#options-card").css( 'top', e.pageY );
     $("#options-card").css( 'left', e.pageX );
 } 
-
+const update_job = () =>{
+    console.log()
+}
 const edit_Row = (row_id) =>{
     $('#jobModal').modal('show');
-    //$('#submit-job')[0].attributes[2].nodeValue = update_job()
+    $('#submit-job')[0].attributes[2].nodeValue = "update_job()";
     row_element = $("#"+row_id);
     document.getElementById("company").value = row_element.children()[0].textContent;
     document.getElementById("position").value = row_element.children()[1].textContent;
@@ -66,49 +68,48 @@ const append_Jobs_Table = (jobs_list) =>{
         insert_NewRow(job);
     }
 } 
-
-const submit_Job = () =>{
-    // Get all Form Values
-    var company = $('#company').val();
-    var position = $('#position').val();
-    var website = $('#website').val();
-    var location = $('#location').val();
-    var jobNum = $('#jobNum').val();
-    var stage = $('#stage').val();
-    var result = $('#result').val() == '1'? 1 : 0;
-    var applied = $('#applied').val()== 'on'? 1 : 0;
-
-    // set into object
-    let job_application = {
-        'jobNumber':jobNum,
-        'company':company,
-        'position':position,
-        'location':location,
-        'website':website,
-        'applied':applied,
-        'stage':stage,
-        'result':result,
+const get_form_data = () =>{
+    let form_data = {
+        'jobNumber': $('#jobNum').val(),
+        'company'  : $('#company').val(),
+        'position' : $('#position').val(),
+        'location' : $('#location').val(),
+        'website'  : $('#website').val(),
+        'applied'  : $('#applied').val()== 'on'? 1 : 0,
+        'stage'    : $('#stage').val(),
+        'result'   : $('#stage').val(),
     }
-    insert_NewRow(job_application);
+    return form_data
+}
+
+const post_job = (job_object,api_path) =>{
     const param = {
         headers:{
             "content-type":"application/json"
         },
-        body:JSON.stringify(job_application),
+        body:JSON.stringify(job_object),
         method:"POST"
     }
     //  POST JOB APPLICATION 
-    fetch('/api/post_Job',param)
+    fetch(`/api/${api_path}`,param)
         .then(data=>{return data.json()})
         .then(res=>{console.log(res)})
         .catch(err=>console.log(err));
-
+}
+const submit_Job = () =>{
+    let job_application = get_form_data();
+    post_job(job_application,'post_Job');
+    insert_NewRow(job_application);
     document.getElementById("job_form").reset();
     $('#jobModal').modal('hide');
 }
 
 const reset_modal = () =>{
     document.getElementById("job_form").reset();
+}
+const open_modal = () =>{
+    reset_modal();
+    $('#submit-job')[0].attributes[2].nodeValue = "submit_Job()";
 }
 
 $(window).on('load', function () {
