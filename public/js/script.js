@@ -30,6 +30,7 @@ const row_to_form = (row_id) => {
     else{document.getElementById("applied").checked=false}
     document.getElementById("stage").value = row_element.children()[6].textContent;
     document.getElementById("result").value = row_element.children()[7].textContent;
+    document.getElementById("date").value = row_element.children()[7].textContent;
 }
 
 const form_to_row = (row_id) =>{
@@ -43,6 +44,7 @@ const form_to_row = (row_id) =>{
     else{row_element.children()[5].textContent="0"}
     row_element.children()[6].textContent = document.getElementById("stage").value ; 
     row_element.children()[7].textContent = document.getElementById("result").value; 
+    row_element.children()[7].textContent = document.getElementById("date").value; 
 }
 
 const update_job = () =>{
@@ -107,6 +109,7 @@ const insert_NewRow = (job) =>{
         <td>${job.applied}</td>\
         <td>${job.stage}</td>\
         <td>${job.result}</td>\
+        <td>${job.date}</td>\
         </tr>`
     $(".table").find('tbody').append(newRow);
     document.getElementById(job.jobNumber).addEventListener("click", show_Table_Menu);
@@ -128,6 +131,7 @@ const get_form_data = () =>{
         'applied'  : $('#applied').val()== 'on'? 1 : 0,
         'stage'    : $('#stage').val(),
         'result'   : $('#result').val(),
+        'date'   : $('#date').val(),
     }
     return form_data
 }
@@ -158,6 +162,7 @@ const reset_modal = () =>{
 const open_modal = () =>{
     reset_modal();
     $('#submit-job')[0].attributes[2].nodeValue = "submit_Job()";
+    document.getElementById("date").value = new Date().toLocaleDateString();
 }
 
 $(window).on('load', function () {

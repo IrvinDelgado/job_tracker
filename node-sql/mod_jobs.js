@@ -18,8 +18,8 @@ const add_Job = async(job) => {
         filename: 'C:\\Users\\ID_11\\job_tracker',
         driver: sqlite3.Database
     });
-    let col = '(jobNumber, company, position, location, website, applied, stage, result)'
-    let valParm = '(?,?,?,?,?,?,?,?)'
+    let col = '(jobNumber, company, position, location, website, applied, stage, result, date)'
+    let valParm = '(?,?,?,?,?,?,?,?,?)'
     let valArr = []
     let sql = `INSERT INTO jobs ${col} VALUES${valParm} `;
     for(key in job){
@@ -37,8 +37,8 @@ const update_Job = async(job) =>{
         filename: 'C:\\Users\\ID_11\\job_tracker',
         driver: sqlite3.Database
     });
-    let sql_param = [job.jobNumber,job.company,job.position,job.location,job.website,job.applied,job.stage,job.result]
-    let col_set = 'jobNumber = ?, company = ?, position = ?, location = ?, website = ?, applied = ?, stage = ?, result = ?'
+    let sql_param = [job.jobNumber,job.company,job.position,job.location,job.website,job.applied,job.stage,job.result,job.date]
+    let col_set = 'jobNumber = ?, company = ?, position = ?, location = ?, website = ?, applied = ?, stage = ?, result = ?, date = ?'
     let sql =   `UPDATE jobs\
                 SET ${col_set}\
                 WHERE jobNumber = ${job.jobNumber}`;
