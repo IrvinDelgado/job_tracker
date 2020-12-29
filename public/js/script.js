@@ -89,6 +89,8 @@ const del_Row = (row_id) =>{
         .then(data=>{return data.json()})
         .then(res=>{console.log(res)})
         .catch(err=>console.log(err));
+    document.getElementById(row_id).remove();
+    $("#options-card").hide();
     }else{
         console.log("Delete was Cancelled")
     }

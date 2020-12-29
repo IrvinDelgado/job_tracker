@@ -55,8 +55,8 @@ const del_Job = async(job_id) =>{
         filename: 'C:\\Users\\ID_11\\job_tracker',
         driver: sqlite3.Database
     });
-    let sql = `DELETE FROM jobs WHERE jobNumber = ${job_id}`
-    db.run(sql, function(err) {
+    let sql = `DELETE FROM jobs WHERE jobNumber = ?`
+    db.run(sql, [job_id], function(err) {
         if (err) {
             return console.log(err.message);
         }
