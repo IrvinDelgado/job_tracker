@@ -1,5 +1,3 @@
-const mod_jobs = require('./node-sql/mod_jobs');
-
 //server.js
 const express = require('express'),
     bodyParser = require("body-parser"),
@@ -14,12 +12,14 @@ server.set('port', process.env.PORT || 3000);
 server.use(express.static('public'));
 server.use('/cash', express.static(__dirname + '/node_modules/cash-dom/dist/'));
 server.use('/bootstrapJS', express.static(__dirname + '/node_modules/bootstrap/dist/js/'));
+//  Here we are configuring express to use body-parser as middle-ware.
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.json());
 
 //  CREATING ROUTES 
 var router = express.Router();
 
 //  GET METHOD
-
 //  GET JOBS
 router.get('/read_jobs', async(req, res) =>{
     var jobs_list = await jobs_mod.read_Jobs();
@@ -27,15 +27,19 @@ router.get('/read_jobs', async(req, res) =>{
 });
 
 //  POST METHOD
-
 //  SUBMIT A JOB
-//  Here we are configuring express to use body-parser as middle-ware.
-server.use(bodyParser.urlencoded({ extended: false }));
-server.use(bodyParser.json());
-
 router.post('/post_Job',(req,res) => {
-    mod_jobs.add_Job(req.body);
+    jobs_mod.add_Job(req.body);
 });
+
+router.post('/del_Job',(req,res) => {
+    jobs_mod.del_Job(req.body.id);
+});
+
+router.put('/update_Job',(req,res) => {
+    jobs_mod.update_Job(req.body);
+});
+
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
