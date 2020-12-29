@@ -19,12 +19,26 @@ const show_Table_Menu = (e) =>{
     $("#options-card").css( 'left', e.pageX );
 } 
 const update_job = () =>{
-    console.log()
+    let job_application = get_form_data();
+    const param = {
+        headers:{
+            "content-type":"application/json"
+        },
+        body:JSON.stringify(job_application),
+        method:"PUT"
+    }
+    //  POST JOB APPLICATION 
+    fetch(`/api/update_Job`,param)
+        .then(data=>{return data.json()})
+        .then(res=>{console.log(res)})
+        .catch(err=>console.log(err));
 }
+
 const edit_Row = (row_id) =>{
     $('#jobModal').modal('show');
     $('#submit-job')[0].attributes[2].nodeValue = "update_job()";
     row_element = $("#"+row_id);
+    // Fill Form using row data
     document.getElementById("company").value = row_element.children()[0].textContent;
     document.getElementById("position").value = row_element.children()[1].textContent;
     document.getElementById("jobNum").value = row_element.children()[2].textContent;
@@ -40,6 +54,18 @@ const del_Row = (row_id) =>{
     let is_sure = confirm("Are you sure you want to delete a job application?");
     if(is_sure){
         console.log(row_id+" was deleted");
+        const param = {
+        headers:{
+            "content-type":"text/plain"
+        },
+        body: row_id,
+        method:"POST"
+    }
+    //  POST JOB APPLICATION 
+    fetch(`/api/del_Job`,param)
+        .then(data=>{return data.json()})
+        .then(res=>{console.log(res)})
+        .catch(err=>console.log(err));
     }else{
         console.log("Delete was Cancelled")
     }
@@ -77,28 +103,26 @@ const get_form_data = () =>{
         'website'  : $('#website').val(),
         'applied'  : $('#applied').val()== 'on'? 1 : 0,
         'stage'    : $('#stage').val(),
-        'result'   : $('#stage').val(),
+        'result'   : $('#result').val(),
     }
     return form_data
 }
 
-const post_job = (job_object,api_path) =>{
+const submit_Job = () =>{
+    let job_application = get_form_data();
     const param = {
         headers:{
             "content-type":"application/json"
         },
-        body:JSON.stringify(job_object),
+        body:JSON.stringify(job_application),
         method:"POST"
     }
     //  POST JOB APPLICATION 
-    fetch(`/api/${api_path}`,param)
+    fetch(`/api/post_Job`,param)
         .then(data=>{return data.json()})
         .then(res=>{console.log(res)})
         .catch(err=>console.log(err));
-}
-const submit_Job = () =>{
-    let job_application = get_form_data();
-    post_job(job_application,'post_Job');
+
     insert_NewRow(job_application);
     document.getElementById("job_form").reset();
     $('#jobModal').modal('hide');
