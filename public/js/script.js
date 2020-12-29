@@ -2,7 +2,7 @@ const jobs_promise = async() =>{
     const response = await fetch('/api/read_jobs');
     //Fetch Error Check
     if(!response.ok){
-        const message = 'An Error has occured: ${response.status}';
+        const message = `An Error has occured: ${response.status}`;
         throw new Error(message);
     }
     const jobs = await response.json();
@@ -18,6 +18,33 @@ const show_Table_Menu = (e) =>{
     $("#options-card").css( 'top', e.pageY );
     $("#options-card").css( 'left', e.pageX );
 } 
+
+const row_to_form = (row_id) => {
+    row_element = $("#"+row_id);
+    document.getElementById("company").value = row_element.children()[0].textContent;
+    document.getElementById("position").value = row_element.children()[1].textContent;
+    document.getElementById("jobNum").value = row_element.children()[2].textContent;
+    document.getElementById("location").value = row_element.children()[3].textContent;
+    document.getElementById("website").value = row_element.children()[4].textContent;
+    if(row_element.children()[5].textContent=="1"){document.getElementById("applied").checked=true}
+    else{document.getElementById("applied").checked=false}
+    document.getElementById("stage").value = row_element.children()[6].textContent;
+    document.getElementById("result").value = row_element.children()[7].textContent;
+}
+
+const form_to_row = (row_id) =>{
+    row_element = $("#"+row_id);
+    row_element.children()[0].textContent = document.getElementById("company").value;
+    row_element.children()[1].textContent = document.getElementById("position").value; 
+    row_element.children()[2].textContent = document.getElementById("jobNum").value; 
+    row_element.children()[3].textContent = document.getElementById("location").value; 
+    row_element.children()[4].textContent = document.getElementById("website").value;
+    if(document.getElementById("applied").checked==true){row_element.children()[5].textContent="1"}
+    else{row_element.children()[5].textContent="0"}
+    row_element.children()[6].textContent = document.getElementById("stage").value ; 
+    row_element.children()[7].textContent = document.getElementById("result").value; 
+}
+
 const update_job = () =>{
     let job_application = get_form_data();
     const param = {
@@ -32,36 +59,32 @@ const update_job = () =>{
         .then(data=>{return data.json()})
         .then(res=>{console.log(res)})
         .catch(err=>console.log(err));
+    form_to_row(job_application.jobNumber);
+    $('#jobModal').modal('hide');
 }
+
+
 
 const edit_Row = (row_id) =>{
     $('#jobModal').modal('show');
+    row_to_form(row_id);
     $('#submit-job')[0].attributes[2].nodeValue = "update_job()";
-    row_element = $("#"+row_id);
-    // Fill Form using row data
-    document.getElementById("company").value = row_element.children()[0].textContent;
-    document.getElementById("position").value = row_element.children()[1].textContent;
-    document.getElementById("jobNum").value = row_element.children()[2].textContent;
-    document.getElementById("location").value = row_element.children()[3].textContent;
-    document.getElementById("website").value = row_element.children()[4].textContent;
-    if(row_element.children()[5].textContent=="1"){document.getElementById("applied").checked=true}
-    else{document.getElementById("applied").checked=false}
-    document.getElementById("stage").value = row_element.children()[6].textContent;
-    document.getElementById("result").value = row_element.children()[7].textContent;
     
 }
+
 const del_Row = (row_id) =>{
     let is_sure = confirm("Are you sure you want to delete a job application?");
+    let job_Object = {'id':row_id};
     if(is_sure){
         console.log(row_id+" was deleted");
         const param = {
         headers:{
-            "content-type":"text/plain"
+            "content-type":"application/json"
         },
-        body: row_id,
+        body: JSON.stringify(job_Object),
         method:"POST"
     }
-    //  POST JOB APPLICATION 
+    //  DELETE JOB APPLICATION 
     fetch(`/api/del_Job`,param)
         .then(data=>{return data.json()})
         .then(res=>{console.log(res)})
@@ -69,7 +92,6 @@ const del_Row = (row_id) =>{
     }else{
         console.log("Delete was Cancelled")
     }
-    //row_element = $("#"+row_id);
     
 }
 
