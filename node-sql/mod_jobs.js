@@ -32,11 +32,13 @@ const add_Job = async(job) => {
     });
     db.close();
 }
+
 const update_Job = async(job) =>{
     const db = await open({
         filename: 'C:\\Users\\ID_11\\job_tracker',
         driver: sqlite3.Database
     });
+    console.log(job);
     let sql_param = [job.jobNumber,job.company,job.position,job.location,job.website,job.applied,job.stage,job.result,job.date]
     let col_set = 'jobNumber = ?, company = ?, position = ?, location = ?, website = ?, applied = ?, stage = ?, result = ?, date = ?'
     let sql =   `UPDATE jobs\

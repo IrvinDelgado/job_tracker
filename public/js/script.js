@@ -105,7 +105,7 @@ const insert_NewRow = (job) =>{
         <td>${job.position}</td>\
         <td>${job.jobNumber}</td>\
         <td>${job.location}</td>\
-        <td>${job.website}</td>\
+        <td><a href=${job.website}>${job.website}</a></td>\
         <td>${job.applied}</td>\
         <td>${job.stage}</td>\
         <td>${job.result}</td>\
@@ -128,7 +128,7 @@ const get_form_data = () =>{
         'position' : $('#position').val(),
         'location' : $('#location').val(),
         'website'  : $('#website').val(),
-        'applied'  : $('#applied').val()== 'on'? 1 : 0,
+        'applied'  : $('#applied')[0].checked == true? 1 : 0,
         'stage'    : $('#stage').val(),
         'result'   : $('#result').val(),
         'date'   : $('#date').val(),
