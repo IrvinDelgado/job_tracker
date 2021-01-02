@@ -26,11 +26,11 @@ const row_to_form = (row_id) => {
     document.getElementById("jobNum").value = row_element.children()[2].textContent;
     document.getElementById("location").value = row_element.children()[3].textContent;
     document.getElementById("website").value = row_element.children()[4].textContent;
-    if(row_element.children()[5].textContent=="1"){document.getElementById("applied").checked=true}
+    if(row_element.children()[5].textContent=="Yes"){document.getElementById("applied").checked=true}
     else{document.getElementById("applied").checked=false}
     document.getElementById("stage").value = row_element.children()[6].textContent;
     document.getElementById("result").value = row_element.children()[7].textContent;
-    document.getElementById("date").value = row_element.children()[7].textContent;
+    document.getElementById("date").value = row_element.children()[8].textContent;
 }
 
 const form_to_row = (row_id) =>{
@@ -40,11 +40,11 @@ const form_to_row = (row_id) =>{
     row_element.children()[2].textContent = document.getElementById("jobNum").value; 
     row_element.children()[3].textContent = document.getElementById("location").value; 
     row_element.children()[4].textContent = document.getElementById("website").value;
-    if(document.getElementById("applied").checked==true){row_element.children()[5].textContent="1"}
-    else{row_element.children()[5].textContent="0"}
+    if(document.getElementById("applied").checked==true){row_element.children()[5].textContent="Yes"}
+    else{row_element.children()[5].textContent="No"}
     row_element.children()[6].textContent = document.getElementById("stage").value ; 
     row_element.children()[7].textContent = document.getElementById("result").value; 
-    row_element.children()[7].textContent = document.getElementById("date").value; 
+    row_element.children()[8].textContent = document.getElementById("date").value; 
 }
 
 const update_job = () =>{
@@ -100,17 +100,18 @@ const del_Row = (row_id) =>{
 }
 
 const insert_NewRow = (job) =>{
+    let fixedApplied = job.applied==1?'Yes':'No'; 
     let newRow = `<tr id='${job.jobNumber}'>\
         <td>${job.company}</td>\
         <td>${job.position}</td>\
         <td>${job.jobNumber}</td>\
         <td>${job.location}</td>\
-        <td><a href=${job.website}>${job.website}</a></td>\
-        <td>${job.applied}</td>\
+        <td><a href=${job.website} target=_blank>${job.website}</a></td>\
+        <td>${fixedApplied}</td>\
         <td>${job.stage}</td>\
         <td>${job.result}</td>\
         <td>${job.date}</td>\
-        </tr>`
+        </tr>`;
     $(".table").find('tbody').append(newRow);
     document.getElementById(job.jobNumber).addEventListener("click", show_Table_Menu);
 }
