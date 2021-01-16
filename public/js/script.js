@@ -70,6 +70,7 @@ const update_job = () =>{
 const edit_Row = (row_id) =>{
     $('#jobModal').modal('show');
     row_to_form(row_id);
+    document.getElementById("date").value = new Date().toLocaleDateString();
     $('#submit-job')[0].attributes[2].nodeValue = "update_job()";
     
 }
@@ -166,11 +167,22 @@ const open_modal = () =>{
     document.getElementById("date").value = new Date().toLocaleDateString();
 }
 
+const show_table_data = () =>{
+    var list  = $("tr")
+    var count = 0
+    for(var i=0;i<list.length;i++){
+        if(list[i].children[5].textContent=='Yes')
+            count++
+    }
+    document.getElementById("totApplied").textContent=count;
+}
+
 $(window).on('load', function () {
     //append jobs to table
     $("#options-card").hide();
     jobs_promise().then(jobs_list => {
         append_Jobs_Table(jobs_list);
+        show_table_data();
     });
 });
 
