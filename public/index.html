@@ -43,9 +43,11 @@
     <br>
     <br>
   </div>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobModal" onclick="open_modal()">Add Job
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobModal"
+    onclick="open_modal()">Add Job
     Application</button>
   <br>
+  <input type="text" id="table_input" onkeyup="search_table()" placeholder="Search for names..">
   <div>
     <div class="row">
       <div class="col">Total Applied:<span id="totApplied"><span></div>

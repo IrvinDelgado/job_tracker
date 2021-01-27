@@ -177,6 +177,21 @@ const show_table_data = () =>{
     document.getElementById("totApplied").textContent=count;
 }
 
+const search_table = () =>{
+    var wordInquired = document.getElementById("table_input").value
+    var jobs = $("tr")
+    for(var i=0;i<jobs.length;i++){
+        jobText = jobs[i].innerText.toLowerCase()
+        if(jobText.includes(wordInquired)){
+            jobs[i].style.display = ""
+        }
+        else{
+            jobs[i].style.display = "none"
+        }
+    } 
+
+}
+
 $(window).on('load', function () {
     //append jobs to table
     $("#options-card").hide();
